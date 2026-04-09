@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-import fetch from "node-fetch";
 
 const app = express();
 app.use(cors());
@@ -29,7 +28,8 @@ app.post("/ask", async (req, res) => {
     });
 
   } catch (err) {
-    res.json({ reply: "Error dari server." });
+    console.error(err);
+    res.status(500).json({ reply: "Error dari server." });
   }
 });
 
