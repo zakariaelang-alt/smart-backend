@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import fetch from "node-fetch";
 
 const app = express();
 app.use(cors());
@@ -24,7 +25,7 @@ app.post("/ask", async (req, res) => {
     const data = await response.json();
 
     res.json({
-      reply: data.output[0].content[0].text
+      reply: data.output?.[0]?.content?.[0]?.text || "AI ga kasih jawaban"
     });
 
   } catch (err) {
