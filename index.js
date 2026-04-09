@@ -5,18 +5,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const API_KEY = process.env.OPENAI_API_KEY;
+const API_KEY = process.env.GROQ_API_KEY;
 
 app.post("/ask", async (req, res) => {
   try {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${API_KEY}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "gpt-4o-mini",
+        model: "llama3-8b-8192",
         messages: [
           { role: "user", content: req.body.message }
         ]
@@ -24,7 +24,7 @@ app.post("/ask", async (req, res) => {
     });
 
     const data = await response.json();
-    console.log("Response OpenAI:", JSON.stringify(data));
+    console.log("Response Groq:", JSON.stringify(data));
 
     res.json({
       reply: data.choices?.[0]?.message?.content || "AI ga kasih jawaban"
